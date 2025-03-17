@@ -44,8 +44,7 @@ Deno.serve(async (req) => {
         const email = body.email
         const password = body.password
         return sighUp(supabaseClient, email, password)
-      }
-      else {
+      } else {
         return new Response(JSON.stringify({ error: 'Invalid auth method' }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 404,
@@ -84,13 +83,19 @@ function isSignUp(url: string) : boolean {
 
 
 async function sighIn(supabaseClient: SupabaseClient, email: string, password: string) {
-  const  response  = await supabaseClient.auth.signInWithPassword({
+  const  {data, error}  = await supabaseClient.auth.signInWithPassword({
     email,
     password,
   })
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 400,
+    })
+  }
 
   return new Response(JSON.stringify({
-    token: response.data.session?.access_token,
+    token: data.session?.access_token,
   }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     status: 200,
@@ -99,13 +104,19 @@ async function sighIn(supabaseClient: SupabaseClient, email: string, password: s
 
 
 async function sighUp(supabaseClient: SupabaseClient, email: string, password: string) {
-  const  response  = await supabaseClient.auth.signUp({
+  const  {data, error }  = await supabaseClient.auth.signUp({
     email,
     password,
   })
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 400,
+    })
+  }
 
   return new Response(JSON.stringify({
-    token: response.data.session?.access_token,
+    token: data.session?.access_token,
   }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     status: 200,
