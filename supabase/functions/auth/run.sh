@@ -1,1 +1,1 @@
-supabase functions serve auth --no-verify-jwt --env-file supabase/functions/.env
+supabase functions serve auth --no-verify-jwt --env-file .env

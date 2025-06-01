@@ -1,1 +1,1 @@
-supabase functions serve fcm_push --no-verify-jwt --env-file supabase/functions/.env
+supabase functions serve fcm_push --no-verify-jwt --env-file .env

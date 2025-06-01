@@ -1,1 +1,1 @@
-supabase functions serve tasks --no-verify-jwt --env-file supabase/functions/.env
+supabase functions serve tasks --no-verify-jwt --env-file .env
