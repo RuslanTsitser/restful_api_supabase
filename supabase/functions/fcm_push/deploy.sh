@@ -1,0 +1,1 @@
+supabase functions deploy fcm_push --project-ref hmaotlstpbizbucjdvzx --no-verify-jwt
