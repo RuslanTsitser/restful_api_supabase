@@ -10,10 +10,12 @@ This project implements a RESTful API using Supabase Edge Functions. It provides
 │   ├── functions/
 │   │   ├── auth/          # Authentication endpoints
 │   │   │   ├── index.ts
-│   │   │   └── README.md
+│   │   │   ├── README.md
+│   │   │   └── run.sh     # Local development script
 │   │   └── tasks/         # Task management endpoints
 │   │       ├── index.ts
-│   │       └── README.md
+│   │       ├── README.md
+│   │       └── run.sh     # Local development script
 │   └── config.toml        # Supabase configuration
 ```
 
@@ -44,6 +46,21 @@ This project implements a RESTful API using Supabase Edge Functions. It provides
    supabase functions deploy auth
    supabase functions deploy tasks
    ```
+
+## Local Development
+
+Each module contains a `run.sh` script for local development:
+
+- `supabase/functions/auth/run.sh` - Runs the authentication service locally
+- `supabase/functions/tasks/run.sh` - Runs the tasks service locally
+
+These scripts start the Edge Functions in development mode with JWT verification disabled and load environment variables from `supabase/functions/.env`.
+
+To run a service locally:
+```bash
+cd supabase/functions/auth  # or tasks
+./run.sh
+```
 
 ## Environment Variables
 
