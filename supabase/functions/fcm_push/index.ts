@@ -1,5 +1,5 @@
 import { JWT } from 'npm:google-auth-library@9'
-import serviceAccount from '../service-account.json' with { type: 'json' }
+import serviceAccount from '../../../service-account.json' with { type: 'json' }
 
 
 Deno.serve(async (req) => {
