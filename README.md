@@ -1,6 +1,6 @@
 # RESTful API with Supabase
 
-This project implements a RESTful API using Supabase Edge Functions. It provides authentication and task management functionality.
+This project implements a RESTful API using Supabase Edge Functions. It provides authentication, task management, and Firebase integration functionality.
 
 ## Project Structure
 
@@ -12,10 +12,13 @@ This project implements a RESTful API using Supabase Edge Functions. It provides
 │   │   │   ├── index.ts
 │   │   │   ├── README.md
 │   │   │   └── run.sh     # Local development script
-│   │   └── tasks/         # Task management endpoints
+│   │   ├── tasks/         # Task management endpoints
+│   │   │   ├── index.ts
+│   │   │   ├── README.md
+│   │   │   └── run.sh     # Local development script
+│   │   └── fcm_push/      # Firebase Cloud Messaging
 │   │       ├── index.ts
-│   │       ├── README.md
-│   │       └── run.sh     # Local development script
+│   │       └── README.md
 │   └── config.toml        # Supabase configuration
 ```
 
@@ -23,28 +26,34 @@ This project implements a RESTful API using Supabase Edge Functions. It provides
 
 - [Authentication API](supabase/functions/auth/README.md) - User registration and login functionality
 - [Tasks API](supabase/functions/tasks/README.md) - Task management with CRUD operations
+- [FCM Push API](supabase/functions/fcm_push/README.md) - Firebase Cloud Messaging push notifications
 
 ## Setup
 
 1. Install Supabase CLI:
+
    ```bash
    npm install -g supabase
    ```
 
 2. Initialize Supabase project:
+
    ```bash
    supabase init
    ```
 
 3. Start the local development environment:
+
    ```bash
    supabase start
    ```
 
 4. Deploy Edge Functions:
+
    ```bash
    supabase functions deploy auth
    supabase functions deploy tasks
+   supabase functions deploy fcm_push
    ```
 
 ## Local Development
@@ -57,6 +66,7 @@ Each module contains a `run.sh` script for local development:
 These scripts start the Edge Functions in development mode with JWT verification disabled and load environment variables from `supabase/functions/.env`.
 
 To run a service locally:
+
 ```bash
 cd supabase/functions/auth  # or tasks
 ./run.sh
@@ -65,6 +75,8 @@ cd supabase/functions/auth  # or tasks
 ## Environment Variables
 
 The following environment variables are required:
+
+### Supabase
 
 - `URL`: Supabase project URL
 - `ANON_KEY`: Supabase anonymous key
@@ -75,6 +87,7 @@ The following environment variables are required:
 - Deno runtime
 - Supabase Edge Functions
 - Supabase Auth
+- Firebase Admin SDK
 
 ## Error Handling
 
