@@ -1,0 +1,1 @@
+supabase secrets set --project-ref hmaotlstpbizbucjdvzx --env-file supabase/functions/upload-file-to-telegram/.env

@@ -1,0 +1,1 @@
+supabase functions deploy upload-file-to-telegram --project-ref hmaotlstpbizbucjdvzx --no-verify-jwt

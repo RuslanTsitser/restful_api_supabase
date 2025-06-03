@@ -1,0 +1,1 @@
+supabase functions serve upload-file-to-telegram --no-verify-jwt --env-file supabase/functions/upload-file-to-telegram/.env
