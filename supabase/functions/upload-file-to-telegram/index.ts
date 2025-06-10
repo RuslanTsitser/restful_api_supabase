@@ -12,12 +12,26 @@ const TOKEN = Deno.env.get("UPLOAD_TELEGRAM_BOT_TOKEN") || "";
 
 const chatId = Deno.env.get("UPLOAD_TELEGRAM_CHAT_ID");
 
-async function makeFileLink(fileIds: string[]): Promise<string[]> {
+interface FileLink {
+  file_id: string;
+  url: string;
+  width: number;
+  height: number;
+  size: number;
+}
+
+async function makeFileLink(fileIds: string[]): Promise<FileLink[]> {
   const files = await Promise.all(fileIds.map(async (fileId) => {
     const fileUrl = await fetch(`https://api.telegram.org/bot${TOKEN}/getFile?file_id=${fileId}`);
     const fileData = await fileUrl.json();
     const filePath = fileData.result.file_path || "";
-    return `https://api.telegram.org/file/bot${TOKEN}/${filePath}`;
+    return {
+      file_id: fileId,
+      width: fileData.result.width,
+      height: fileData.result.height,
+      size: fileData.result.file_size,
+      url: `https://api.telegram.org/file/bot${TOKEN}/${filePath}`,
+    }
   }));
   return files;
 }
@@ -38,10 +52,9 @@ Deno.serve(async (req) => {
     });
     console.log(response);
     const data = await response.json();
-    const imageUrl = await makeFileLink(data.result.photo.map((photo: any) => photo.file_id));
+    const images = await makeFileLink(data.result.photo.map((photo: any) => photo.file_id));
     return new Response(JSON.stringify({
-      file_id: data.result.photo[0].file_id,
-      image_url: imageUrl
+      images: images,
     }));
   } catch (error: unknown) {
     console.error("Error sending photo:", error);
